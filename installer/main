@@ -1,0 +1,49 @@
+#!/bin/bash
+
+echo "Jexactyl Assistant - Install"
+echo "$(tput setaf 3)By typing YES, you confirm that:"
+echo "$(tput setaf 6)"
+echo "- You are running Ubuntu 20.06 or later"
+echo "- Your system has > 1GB RAM, and > 20GB disk"
+echo "- You are running this script with 'sudo' (root)"
+echo "- You accept full liability for running this script"
+echo "$(tput setaf 3)"
+
+read -p "Type YES to accept: " confirmation
+
+if [[ $confirmation == "YES" ]] || [[ $confirmation == "yes" ]];
+    then
+    echo "$(tput setaf 2)Confirmed - Running Installation..."
+    sleep 1
+    clear
+fi
+
+echo "Updating system..."
+echo '>>>>                [20%]'
+apt update &&  apt -y upgrade > /dev/null 2>&1
+
+echo "Downloading dependencies..."
+echo '>>>>>>>>            [40%]'
+/bin/bash ./dependencies
+
+echo "Downloading Jexactyl..."
+echo '>>>>>>>>>>>>        [60%]'
+/bin/bash ./files
+
+echo "Installing Composer packages..."
+echo '>>>>>>>>>>>>>>>>    [80%]'
+/bin/bash ./composer
+
+echo "Cleaning up..."
+echo '>>>>>>>>>>>>>>>>>>>>[100%]'
+clear
+
+echo "=[Jexactyl Assistant]===================="
+echo "                                         "
+echo "Jexactyl Assistant has been configured!  "
+echo "You can start the assistant by running:  "
+echo "                                         "
+echo "> cd /var/www/jexactyl-assistant         "
+echo "> php artisan serve                      "
+echo "                                         "
+echo "=[Jexactyl Assistant]===================="
