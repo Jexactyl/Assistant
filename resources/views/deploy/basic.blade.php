@@ -15,25 +15,31 @@
                 <h5 class="text-xl font-bold text-gray-400 text-center mt-4">
                     Step 1/4 - Basic Settings
                 </h5>
-
-                <x-form-card>
-                    <div class="mb-4">
-                        <x-input-label for="name" :value="__('Panel Name')" />
-                        <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" placeholder="Jexactyl" required />
-                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                    </div>
-                    <div class="my-4">
-                        <x-input-label for="logo" :value="__('Panel Logo')" />
-                        <x-text-input id="logo" class="block mt-1 w-full" type="text" name="logo" placeholder="https://avatars.githubusercontent.com/u/91636558" />
-                        <x-input-error :messages="$errors->get('logo')" class="mt-2" />
-                    </div>
-                    <div class="flex items-center justify-end mt-8">
-                        <x-primary-button class="ml-3">
-                            Next >
-                        </x-primary-button>
-                    </div>
-                </x-form-card>
-
+                <form method="POST" action="{{ route('deploy.basic') }}">
+                    @csrf
+                    <x-form-card>
+                        <div class="mb-4">
+                            <x-input-label for="url" :value="__('Panel URL')" />
+                            <x-text-input id="url" class="block mt-1 w-full" type="text" name="url" placeholder="https://panel.example.com" />
+                            <x-input-error :messages="$errors->get('url')" class="mt-2" />
+                        </div>
+                        <div class="my-4">
+                            <x-input-label for="name" :value="__('Panel Name')" />
+                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" placeholder="Jexactyl" required />
+                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        </div>
+                        <div class="my-4">
+                            <x-input-label for="logo" :value="__('Panel Logo')" />
+                            <x-text-input id="logo" class="block mt-1 w-full" type="text" name="logo" placeholder="https://t.co/hello.png" />
+                            <x-input-error :messages="$errors->get('logo')" class="mt-2" />
+                        </div>
+                        <div class="flex items-center justify-end mt-8">
+                            <x-primary-button class="ml-3">
+                                Next &#62;
+                            </x-primary-button>
+                        </div>
+                    </x-form-card>
+                </form>
                 <div class="absolute bottom-0 left-0 flex items-center m-10 text-xl font-semibold text-gray-600">
                     <p>
                         You are currently authenticated.&nbsp;

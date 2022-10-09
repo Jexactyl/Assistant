@@ -34,8 +34,10 @@ echo "Installing Composer packages..."
 echo '>>>>>>>>>>>>>>>>    [80%]'
 /bin/bash ./composer
 
-echo "Cleaning up..."
+echo "Setting encryption keys..."
 echo '>>>>>>>>>>>>>>>>>>>>[100%]'
+cd /var/www/jexactyl && php artisan key:generate --force
+cd /var/www/jexactyl-assistant && php artisan key:generate --force
 clear
 
 echo "=[Jexactyl Assistant]===================="

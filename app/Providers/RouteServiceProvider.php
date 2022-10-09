@@ -41,6 +41,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function configureRateLimiting()
     {
-        /* No need for this currently. */
+        //
     }
 }
