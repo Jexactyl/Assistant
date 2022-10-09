@@ -24,15 +24,15 @@ apt update &&  apt -y upgrade > /dev/null 2>&1
 
 echo "Downloading dependencies..."
 echo '>>>>>>>>            [40%]'
-/bin/bash ./dependencies
+curl -s https://raw.githubusercontent.com/Jexactyl/assistant/dev/installer/dependencies | bash
 
 echo "Downloading Jexactyl..."
 echo '>>>>>>>>>>>>        [60%]'
-/bin/bash ./files
+curl -s https://raw.githubusercontent.com/Jexactyl/assistant/dev/installer/files | bash
 
 echo "Installing Composer packages..."
 echo '>>>>>>>>>>>>>>>>    [80%]'
-/bin/bash ./composer
+curl -s https://raw.githubusercontent.com/Jexactyl/assistant/dev/installer/composer | bash
 
 echo "Setting encryption keys..."
 echo '>>>>>>>>>>>>>>>>>>>>[100%]'
