@@ -36,7 +36,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ steps.extract_changelog.outputs.version_name }}
-          body_path: ./RELEASE_CHANGELOG
           draft: true
           prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
 
