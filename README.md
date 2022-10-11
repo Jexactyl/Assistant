@@ -6,8 +6,9 @@ A system which makes installing Jexactyl far, far easier.
 ### Installation
 Run the following script below on your Ubuntu system to install.
 :construction: This software is currently in heavy alpha testing and WILL NOT WORK AS INTENDED.
+
 ```
-curl -s "curl -s https://raw.githubusercontent.com/Jexactyl/assistant/dev/installer/main | bash" | bash
+curl -s "https://raw.githubusercontent.com/Jexactyl/assistant/dev/installer/main" | bash
 ```
 
 ### License

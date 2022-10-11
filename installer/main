@@ -3,7 +3,7 @@
 echo "Jexactyl Assistant - Install"
 echo "$(tput setaf 3)By typing YES, you confirm that:"
 echo "$(tput setaf 6)"
-echo "- You are running Ubuntu 20.06 or later"
+echo "- You are running Ubuntu 20.04 or later"
 echo "- Your system has > 1GB RAM, and > 20GB disk"
 echo "- You are running this script with 'sudo' (root)"
 echo "- You accept full liability for running this script"

@@ -1,19 +1,31 @@
 #!/bin/bash
 
-mkdir /var/www/jexactyl > /dev/null 2>&1
-cd /var/www/jexactyl > /dev/null 2>&1
+# -- Jexactyl core files
+
+mkdir /var/www/jexactyl
+cd /var/www/jexactyl
+
 curl -Lo panel.tar.gz https://github.com/jexactyl/jexactyl/releases/latest/download/panel.tar.gz > /dev/null 2>&1
 tar -xzvf panel.tar.gz > /dev/null 2>&1
-rm panel.tar.gz > /dev/null 2>&1
-chmod -R 755 storage/* bootstrap/cache/ > /dev/null 2>&1
-cp -R .env.example .env > /dev/null 2>&1
+rm panel.tar.gz
 
-mkdir /var/www/jexactyl-assistant > /dev/null 2>&1
-cd /var/www/jexactyl-assistant > /dev/null 2>&1
+chmod -R 755 storage/* bootstrap/cache/
+cp -R .env.example .env
+
+# --
+
+# -- Jexactyl Assistant core files
+
+mkdir /var/www/jexactyl-assistant
+cd /var/www/jexactyl-assistant
+
 curl -Lo assistant.tar.gz https://github.com/jexactyl/assistant/releases/latest/download/assistant.tar.gz > /dev/null 2>&1
 tar -xzvf assistant.tar.gz > /dev/null 2>&1
-rm assistant.tar.gz > /dev/null 2>&1
-chmod -R 755 storage/* bootstrap/cache/ > /dev/null 2>&1
-cp -R .env.example .env > /dev/null 2>&1
+rm assistant.tar.gz
+
+chmod -R 755 storage/* bootstrap/cache/
+cp -R .env.example .env
+
+# --
 
 clear
