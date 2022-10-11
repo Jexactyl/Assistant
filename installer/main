@@ -12,15 +12,18 @@ echo "$(tput setaf 3)"
 read -p "Type YES to accept: " confirmation
 
 if [[ $confirmation == "YES" ]] || [[ $confirmation == "yes" ]];
-    then
+  then
     echo "$(tput setaf 2)Confirmed - Running Installation..."
     sleep 1
     clear
+
+  else
+    exit
 fi
 
 echo "Updating system..."
 echo '>>>>                [20%]'
-apt update &&  apt -y upgrade > /dev/null 2>&1
+apt update > /dev/null 2>&1 &&  apt -y upgrade > /dev/null 2>&1 && clear
 
 echo "Downloading dependencies..."
 echo '>>>>>>>>            [40%]'
