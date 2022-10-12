@@ -1,5 +1,73 @@
 #!/bin/bash
 
+# -------------------------------------------------------------------------------
+# Script Functions
+# -------------------------------------------------------------------------------
+
+# Author: Tasos Latsas (https://github.com/tlatsas/bash-spinner)
+# Code provided and modified under MIT license.
+function _spinner() {
+    local on_success="DONE"
+    local on_fail="FAIL"
+    local white="\e[1;37m"
+    local green="\e[1;32m"
+    local red="\e[1;31m"
+    local nc="\e[0m"
+
+    case $1 in
+        start)
+            let column=$(tput cols)-${#2}-8
+            echo -ne ${2}
+            printf "%${column}s"
+
+            i=1
+            sp='\|/-'
+            delay=${SPINNER_DELAY:-0.15}
+
+            while :
+            do
+                printf "\b${sp:i++%${#sp}:1}"
+                sleep $delay
+            done
+            ;;
+        stop)
+            if [[ -z ${3} ]]; then
+                echo "spinner is not running.."
+                exit 1
+            fi
+
+            kill $3 > /dev/null 2>&1
+
+            echo -en "\b["
+            if [[ $2 -eq 0 ]]; then
+                echo -en "${green}${on_success}${nc}"
+            else
+                echo -en "${red}${on_fail}${nc}"
+            fi
+            echo -e "]"
+            ;;
+        *)
+            echo "invalid argument, try {start/stop}"
+            exit 1
+            ;;
+    esac
+}
+
+function start_spinner {
+    _spinner "start" "${1}" &
+    _sp_pid=$!
+    disown
+}
+
+function stop_spinner {
+    _spinner "stop" $1 $_sp_pid
+    unset _sp_pid
+}
+
+# -------------------------------------------------------------------------------
+# Main Script
+# -------------------------------------------------------------------------------
+
 echo "Jexactyl Assistant - Install"
 echo "$(tput setaf 3)By typing YES, you confirm that:"
 echo "$(tput setaf 6)"
@@ -9,7 +77,8 @@ echo "- You are running this script with 'sudo' (root)"
 echo "- You accept full liability for running this script"
 echo "$(tput setaf 3)"
 
-read -p "Type YES to accept: " confirmation
+# Using /dev/tty ensures that users can provide input on Linux.
+read -p "Type YES to accept: " confirmation </dev/tty
 
 if [[ $confirmation == "YES" ]] || [[ $confirmation == "yes" ]];
   then
@@ -21,34 +90,44 @@ if [[ $confirmation == "YES" ]] || [[ $confirmation == "yes" ]];
     exit
 fi
 
-echo "Updating system..."
-echo '>>>>                [20%]'
+start_spinner "Updating system... (20%)"
 apt update > /dev/null 2>&1 &&  apt -y upgrade > /dev/null 2>&1 && clear
+stop_spinner $?
 
-echo "Downloading dependencies..."
-echo '>>>>>>>>            [40%]'
+start_spinner "Downloading dependencies... (40%)"
 curl -s https://raw.githubusercontent.com/Jexactyl/assistant/dev/installer/dependencies | bash
+stop_spinner $?
 
-echo "Downloading Jexactyl..."
-echo '>>>>>>>>>>>>        [60%]'
+start_spinner "Downloading files... (60%)"
 curl -s https://raw.githubusercontent.com/Jexactyl/assistant/dev/installer/files | bash
+stop_spinner $?
 
-echo "Installing Composer packages..."
-echo '>>>>>>>>>>>>>>>>    [80%]'
+start_spinner "Downloading modules... (80%)"
 curl -s https://raw.githubusercontent.com/Jexactyl/assistant/dev/installer/composer | bash
+stop_spinner $?
 
-echo "Setting encryption keys..."
-echo '>>>>>>>>>>>>>>>>>>>>[100%]'
+start_spinner "Setting encryption keys... (100%)"
 cd /var/www/jexactyl && php artisan key:generate --force
 cd /var/www/jexactyl-assistant && php artisan key:generate --force
-clear
+
+# -------------------------------------------------------------------------------
+# Final Message
+# -------------------------------------------------------------------------------
 
 echo "=[Jexactyl Assistant]===================="
 echo "                                         "
 echo "Jexactyl Assistant has been configured!  "
+echo "                                         "
+echo "Create an account so you can log in:     "
+echo "> cd /var/www/jexactyl-assistant         "
+echo "> php artisan p:user:create              "
+echo "                                         "
 echo "You can start the assistant by running:  "
 echo "                                         "
 echo "> cd /var/www/jexactyl-assistant         "
-echo "> php artisan serve                      "
+echo "> php artisan serve --host=0.0.0.0       "
+echo "                                         "
+echo "You can then access Assistant here:      "
+echo ">                                        "
 echo "                                         "
 echo "=[Jexactyl Assistant]===================="

@@ -25,7 +25,3 @@ rm assistant.tar.gz
 
 chmod -R 755 storage/* bootstrap/cache/
 cp -R .env.example .env
-
-# --
-
-clear
