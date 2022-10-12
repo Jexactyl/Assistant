@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd /var/www/jexactyl && php artisan key:generate --force > /dev/null 2>&1
+cd /var/www/jexactyl-assistant && php artisan key:generate --force > /dev/null 2>&1
+
+php artisan migrate --force > /dev/null 2>&1

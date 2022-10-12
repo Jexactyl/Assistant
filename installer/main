@@ -106,9 +106,8 @@ start_spinner "Downloading modules... (80%)"
 curl -s https://raw.githubusercontent.com/Jexactyl/assistant/dev/installer/composer | bash
 stop_spinner $?
 
-start_spinner "Setting encryption keys... (100%)"
-cd /var/www/jexactyl && php artisan key:generate --force
-cd /var/www/jexactyl-assistant && php artisan key:generate --force
+start_spinner "Configuring... (100%)"
+curl -s https://raw.githubusercontent.com/Jexactyl/assistant/dev/installer/configure | bash
 stop_spinner $?
 clear
 
@@ -128,8 +127,5 @@ echo "You can start the assistant by running:  "
 echo "                                         "
 echo "> cd /var/www/jexactyl-assistant         "
 echo "> php artisan serve --host=0.0.0.0       "
-echo "                                         "
-echo "You can then access Assistant here:      "
-echo ">                                        "
 echo "                                         "
 echo "=[Jexactyl Assistant]===================="
