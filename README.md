@@ -11,6 +11,9 @@ Run the following script below on your Ubuntu system to install.
 curl -s "https://raw.githubusercontent.com/Jexactyl/assistant/dev/installer/main" | bash
 ```
 
+### Screenshots
+![image](https://user-images.githubusercontent.com/72230943/195948733-fc30c2ff-ed17-418b-9be2-cf0d5786a85c.png)
+
 ### License
 ```
 Copyright 2022 Jexactyl Software
