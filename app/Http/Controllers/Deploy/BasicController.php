@@ -33,13 +33,8 @@ class BasicController extends Controller
      */
     public function update(BasicRequest $request)
     {
-        $response = $this->commandService
-            ->handle("sed -i \"s/APP_URL=http:\/\/panel.example.com/APP_URL=" . $request->input('url') . "/\" /var/www/jexactyl/.env");
-
-        if (!$response) {
-            throw new Exception('Unable to process command');
-        } else {
-            return dd($request->input('url'), $response);
-        };
+        $this->commandService->handle("sed -i \"s/APP_URL=http:\/\/panel.example.com/APP_URL=" . $request->input('url') . "/\" /var/www/jexactyl/.env");
+        $this->commandService->handle("mysql -e \"INSERT INTO panel.settings (key, value) VALUES ('settings::app:logo', '" . $request->input('logo') . "')");
+        $this->commandService->handle("mysql -e \"INSERT INTO panel.settings (key, value) VALUES ('settings::app:name', '" . $request->input('name') . "')");
     }
 }
